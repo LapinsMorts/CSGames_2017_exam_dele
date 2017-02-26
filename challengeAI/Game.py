@@ -3,7 +3,7 @@
 
 from GameManager import GameManager
 from AI import AI
-from AI1 import AI1 # for testing purposes
+from AI1 import AI1  # for testing purposes
 from Player import Player
 
 print("""
