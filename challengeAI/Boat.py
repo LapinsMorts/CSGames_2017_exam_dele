@@ -32,10 +32,11 @@ class Boat:
 
     def is_wreck(self):
         # checks if the boat is all 1, if not, returns False
-        for i in range(self._boat_size):
-            if not self._life_array[i]:
-                return False
-        return True
+        return list(self._life_array).count(True) == len(self._life_array)
+        #for i in range(self._boat_size):
+        #    if not self._life_array[i]:
+        #        return False
+        #return True
 
     def is_colliding(self, y, x, size, orientation):
         if self._boat_orientation == 'h':

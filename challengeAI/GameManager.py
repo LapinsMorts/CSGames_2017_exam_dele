@@ -3,7 +3,6 @@
 
 from HitGrid import HitGrid
 from Boat import Boat
-import numpy as np
 import random
 import copy as cp
 
@@ -104,26 +103,20 @@ class GameManager:
         is_sank = False
         if player_id == 1:
             # shoots as the first player
-            is_a_hit = False
             for i in range(len(self._second_boat_array)):
-                is_a_hit = self._second_boat_array[i].is_new_hit(y, x)
-                if is_a_hit:
+                if self._second_boat_array[i].is_new_hit(y, x):
                     self._second_boat_array[i].get_hit(y, x)
                     is_sank = self._second_boat_array[i].is_wreck()
                     self._first_hit_grid.mark_hit(y, x)
-                    is_a_hit = False
                     if is_sank:
                         print("Touché Coulé! ")
         else:
             # shoots as the second player
-            is_a_hit = False
             for i in range(len(self._first_boat_array)):
-                is_a_hit = self._first_boat_array[i].is_new_hit(y, x)
-                if is_a_hit:
+                if self._first_boat_array[i].is_new_hit(y, x):
                     self._first_boat_array[i].get_hit(y, x)
                     is_sank = self._first_boat_array[i].is_wreck()
                     self._second_hit_grid.mark_hit(y, x)
-                    is_a_hit = False
                     if is_sank:
                         print("Touché Coulé!")
         return is_sank

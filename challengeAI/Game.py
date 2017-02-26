@@ -27,8 +27,8 @@ game_manager = GameManager()
 # print("Generating players and AIs...")
 
 # for testing purposes, you can set the two players as AIs
-first_player = Player(game_manager, 1)
-# first_player = AI1(game_manager, 1)
+# first_player = Player(game_manager, 1)
+first_player = AI1(game_manager, 1)
 second_player = AI(game_manager, 2)
 
 first_player.place_boats()
