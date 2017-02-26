@@ -6,65 +6,65 @@ import numpy as np
 
 class Boat:
     # a boat is mostly an array of 0s that turns to 1 once they are hit.
-    # a boat full of 1s is a wreck
+    # a boat full of 1 is a wreck
 
     def __init__(self, y, x, size, orientation):
-        self.x_pos = x
-        self.y_pos = y
-        self.boat_size = size
-        self.boat_orientation = orientation
-        self.life_array = np.zeros(size)
+        self._x_pos = x
+        self._y_pos = y
+        self._boat_size = size
+        self._boat_orientation = orientation
+        self._life_array = np.zeros(size)
 
     def get_hit(self, y, x):
-        if self.boat_orientation == 'h':
-            self.life_array[x - self.x_pos] = 1
-        if self.boat_orientation == 'v':
-            self.life_array[y-self.y_pos] = 1
+        if self._boat_orientation == 'h':
+            self._life_array[x - self._x_pos] = 1
+        if self._boat_orientation == 'v':
+            self._life_array[y-self._y_pos] = 1
 
     def is_new_hit(self, y, x):
-        if (self.boat_orientation == 'h' and y == self.y_pos and
-                x >= self.x_pos and x < self.x_pos + self.boat_size):
-            return not self.life_array[x - self.x_pos]
-        if (self.boat_orientation == 'v' and x == self.x_pos and
-                y >= self.y_pos and y < self.y_pos + self.boat_size):
-            return not self.life_array[y - self.y_pos]
+        if (self._boat_orientation == 'h' and y == self._y_pos and
+                x >= self._x_pos and x < self._x_pos + self._boat_size):
+            return not self._life_array[x - self._x_pos]
+        if (self._boat_orientation == 'v' and x == self._x_pos and
+                y >= self._y_pos and y < self._y_pos + self._boat_size):
+            return not self._life_array[y - self._y_pos]
         return False
 
     def is_wreck(self):
         # checks if the boat is all 1, if not, returns False
-        for i in range(self.boat_size):
-            if not self.life_array[i]:
+        for i in range(self._boat_size):
+            if not self._life_array[i]:
                 return False
         return True
 
     def is_colliding(self, y, x, size, orientation):
-        if self.boat_orientation == 'h':
+        if self._boat_orientation == 'h':
             collides = False
             if orientation == 'h':
                 for i in range(size):
                     collides = (collides or
-                                y == self.y_pos and
-                                x + i >= self.x_pos and
-                                x + i < self.x_pos + self.boat_size)
+                                y == self._y_pos and
+                                x + i >= self._x_pos and
+                                x + i < self._x_pos + self._boat_size)
             else:
                 for i in range(size):
                     collides = (collides or
-                                y + i == self.y_pos and
-                                x >= self.x_pos and
-                                x < self.x_pos + self.boat_size)
+                                y + i == self._y_pos and
+                                x >= self._x_pos and
+                                x < self._x_pos + self._boat_size)
             return collides
         else:
             collides = False
             if orientation == 'h':
                 for i in range(size):
                     collides = (collides or
-                                x + i == self.x_pos and
-                                y >= self.y_pos and
-                                y < self.y_pos + self.boat_size)
+                                x + i == self._x_pos and
+                                y >= self._y_pos and
+                                y < self._y_pos + self._boat_size)
             else:
                 for i in range(size):
                     collides = (collides or
-                                x == self.x_pos and
-                                y + i >= self.y_pos and
-                                y + i < self.y_pos + self.boat_size)
+                                x == self._x_pos and
+                                y + i >= self._y_pos and
+                                y + i < self._y_pos + self._boat_size)
             return collides

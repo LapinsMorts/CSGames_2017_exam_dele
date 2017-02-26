@@ -12,16 +12,16 @@ class GameManager:
 
     def __init__(self):
         # Generating the grids
-        self.first_hit_grid = HitGrid()
-        self.second_hit_grid = HitGrid()
-        self.first_boat_array = [None, None, None, None, None]
-        self.second_boat_array = [None, None, None, None, None]
+        self._first_hit_grid = HitGrid()
+        self._second_hit_grid = HitGrid()
+        self._first_boat_array = [None, None, None, None, None]
+        self._second_boat_array = [None, None, None, None, None]
 
     def get_hit_grid(self, player_id):
         if player_id == 1:
-            temp = cp.deepcopy(self.first_hit_grid)
+            temp = cp.deepcopy(self._first_hit_grid)
         else:
-            temp = cp.deepcopy(self.second_hit_grid)
+            temp = cp.deepcopy(self._second_hit_grid)
         return temp.get_grid()
 
     def is_game_finished(self):
@@ -30,9 +30,9 @@ class GameManager:
         second_player_dead = True
         for i in range(0, 5):
             first_player_dead = (first_player_dead and
-                                 self.first_boat_array[i].is_wreck())
+                                 self._first_boat_array[i].is_wreck())
             second_player_dead = (second_player_dead and
-                                  self.second_boat_array[i].is_wreck())
+                                  self._second_boat_array[i].is_wreck())
 
         return first_player_dead or second_player_dead
 
@@ -54,12 +54,12 @@ class GameManager:
                     orientation_c = 'v'
 
                 new_boat_placed = self.place_single_boat(
-                    self.first_boat_array,
+                    self._first_boat_array,
                     y_pos, x_pos,
                     boat_sizes_array[boat_count],
                     orientation_c, boat_count)
                 if new_boat_placed:
-                    boat_count = boat_count + 1
+                    boat_count += 1
         else:
             while boat_count < 5:
                 orientation = random.randint(0, 1)
@@ -71,13 +71,14 @@ class GameManager:
                     y_pos = random.randint(0, 9 - boat_sizes_array[boat_count])
                     x_pos = random.randint(0, 9)
                     orientation_c = 'v'
+
                 new_boat_placed = self.place_single_boat(
-                    self.second_boat_array,
+                    self._second_boat_array,
                     y_pos, x_pos,
                     boat_sizes_array[boat_count],
                     orientation_c, boat_count)
                 if new_boat_placed:
-                    boat_count = boat_count + 1
+                    boat_count += 1
 
     def place_single_boat(self, b_array, y, x, size, orientation, count):
         # tries to place a boat, returns true if placed, false if not
@@ -86,7 +87,7 @@ class GameManager:
         while not(b_array[i] is None):
             is_wrong_spot = (is_wrong_spot or
                              b_array[i].is_colliding(y, x, size, orientation))
-            i = i + 1
+            i += 1
         if not is_wrong_spot:
             b = Boat(y, x, size, orientation)
             b_array[count] = b
@@ -104,24 +105,24 @@ class GameManager:
         if player_id == 1:
             # shoots as the first player
             is_a_hit = False
-            for i in range(0, len(self.second_boat_array)):
-                is_a_hit = self.second_boat_array[i].is_new_hit(y, x)
+            for i in range(len(self._second_boat_array)):
+                is_a_hit = self._second_boat_array[i].is_new_hit(y, x)
                 if is_a_hit:
-                    self.second_boat_array[i].get_hit(y, x)
-                    is_sank = self.second_boat_array[i].is_wreck()
-                    self.first_hit_grid.mark_hit(y, x)
+                    self._second_boat_array[i].get_hit(y, x)
+                    is_sank = self._second_boat_array[i].is_wreck()
+                    self._first_hit_grid.mark_hit(y, x)
                     is_a_hit = False
                     if is_sank:
                         print("Touché Coulé! ")
         else:
             # shoots as the second player
             is_a_hit = False
-            for i in range(0, len(self.first_boat_array)):
-                is_a_hit = self.first_boat_array[i].is_new_hit(y, x)
+            for i in range(len(self._first_boat_array)):
+                is_a_hit = self._first_boat_array[i].is_new_hit(y, x)
                 if is_a_hit:
-                    self.first_boat_array[i].get_hit(y, x)
-                    is_sank = self.first_boat_array[i].is_wreck()
-                    self.second_hit_grid.mark_hit(y, x)
+                    self._first_boat_array[i].get_hit(y, x)
+                    is_sank = self._first_boat_array[i].is_wreck()
+                    self._second_hit_grid.mark_hit(y, x)
                     is_a_hit = False
                     if is_sank:
                         print("Touché Coulé!")
@@ -130,22 +131,21 @@ class GameManager:
     def print_winner(self):
         first_player_dead = True
         second_player_dead = True
-        for i in range(0, 5):
+        for i in range(5):
             first_player_dead = (first_player_dead and
-                                 self.first_boat_array[i].is_wreck())
+                                 self._first_boat_array[i].is_wreck())
             second_player_dead = (second_player_dead and
-                                  self.second_boat_array[i].is_wreck())
+                                  self._second_boat_array[i].is_wreck())
 
         if first_player_dead and not second_player_dead:
             print("Joueur2 a gagné!")
+        elif second_player_dead and not first_player_dead:
+            print("Joueur1 a gagné!")
         else:
-            if second_player_dead and not first_player_dead:
-                print("Joueur1 a gagné!")
-            else:
-                print("Partie nulle!")
+            print("Partie nulle!")
 
     def print_grids(self):
         print("Joueur1 a touché : ")
-        self.first_hit_grid.print_self()
+        self._first_hit_grid.print_self()
         print("Joueur2 a touché : ")
-        self.second_hit_grid.print_self()
+        self._second_hit_grid.print_self()

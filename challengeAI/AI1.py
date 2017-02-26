@@ -4,7 +4,7 @@
 from GameManager import GameManager
 
 
-class AI:
+class AI1:
 
     def __init__(self, game_M, id_num):
         self._game_manager = game_M

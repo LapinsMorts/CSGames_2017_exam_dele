@@ -3,6 +3,7 @@
 
 from GameManager import GameManager
 from AI import AI
+from AI1 import AI1 # for testing purposes
 from Player import Player
 
 print("""
@@ -25,8 +26,9 @@ game_manager = GameManager()
 # mauvais ID: tu t'attaques toi-meme. T'as juste a pas y toucher.
 # print("Generating players and AIs...")
 
+# for testing purposes, you can set the two players as AIs
 first_player = Player(game_manager, 1)
-
+# first_player = AI1(game_manager, 1)
 second_player = AI(game_manager, 2)
 
 first_player.place_boats()

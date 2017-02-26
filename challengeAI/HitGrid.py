@@ -7,20 +7,15 @@ import numpy as np
 class HitGrid:
 
     def __init__(self):
-        self.printable_grid = np.chararray((10, 10))
-        self.printable_grid[:] = '~'
+        self._printable_grid = np.chararray((10, 10))
+        self._printable_grid[:] = '~'
 
     def mark_hit(self, y, x):
-        self.printable_grid[y, x] = '#'
+        self._printable_grid[y, x] = '#'
 
     def print_self(self):
         print('  0 1 2 3 4 5 6 7 8 9')
-        chaine = np.array_str(self.printable_grid)
-        # for i in range(0,10):
-        #     for j in range(0,10):
-        #         print(i)
-        #         print(self.printable_grid[i,j])
-        #     print('')
+        chaine = np.array_str(self._printable_grid)
         chaine = chaine.replace("'", "")
         chaine = chaine.replace('[', '')
         chaine = chaine.replace(']', '')
@@ -37,4 +32,4 @@ class HitGrid:
         print(chaine)
 
     def get_grid(self):
-        return self.printable_grid
+        return self._printable_grid
