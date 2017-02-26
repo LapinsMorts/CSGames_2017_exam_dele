@@ -19,7 +19,7 @@ class AI1:
     def play(self):
         if self._i > 9:
             self._i = 0
-            self._j = self._j + 1
+            self._j += 1
         if self._j > 9:
             self._j = 0
 
