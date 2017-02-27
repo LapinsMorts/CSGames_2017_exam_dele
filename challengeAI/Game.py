@@ -24,12 +24,11 @@ game_manager = GameManager()
 # l'autre. Tous les joueurs doivent avoir le game_manager pour pouvoir placer
 # les bateaux et tirer. Les joueurs sont reconnus avec leur ID. Tu utilises le
 # mauvais ID: tu t'attaques toi-meme. T'as juste a pas y toucher.
-# print("Generating players and AIs...")
 
 # for testing purposes, you can set the two players as AIs
 # first_player = Player(game_manager, 1)
-first_player = AI1(game_manager, 1)
-second_player = AI(game_manager, 2)
+first_player = AI1(game_manager, 0)
+second_player = AI(game_manager, 1)
 
 first_player.place_boats()
 second_player.place_boats()
