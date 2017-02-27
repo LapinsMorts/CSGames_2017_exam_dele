@@ -1,21 +1,26 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from GameManager import GameManager
+""" This module contains the Player class, that represents a player"""
+
 import sys
 
 
-class Player:
+class Player(object):
+    """ The class implements the actions a player will have to do to
+    play the game"""
 
-    def __init__(self, game_M, id_num):
-        self._game_manager = game_M
+    def __init__(self, game_m, id_num):
+        """ Initialise function"""
+        self._game_manager = game_m
         self._player_id = id_num
 
     def place_boats(self):
-        # place les bateaux automatiquement et au hasard
+        """ Places the boats rapidly and randomly"""
         self._game_manager.place_boats(self._player_id)
 
     def play(self):
+        """ The function that lets the player play it's turn"""
         is_bad_coords = True
         y_coord = 0
         x_coord = 0
@@ -28,12 +33,14 @@ class Player:
             except (TypeError, SyntaxError, NameError, RuntimeError):
                 is_bad_coords = True
             except KeyboardInterrupt:
-                print("\nKTHXBYE")
+                print "\nKTHXBYE"
                 sys.exit(0)
             if is_bad_coords:
-                print("Mauvaises coordonnées! ")
+                print "Mauvaises coordonnées! "
 
         self._game_manager.shoot(self._player_id, y_coord, x_coord)
 
-    def check_bounds(self, num):
+    @classmethod
+    def check_bounds(cls, num):
+        """ checks if the given number is between the 0-9 bounds"""
         return num >= 0 and num <= 9
